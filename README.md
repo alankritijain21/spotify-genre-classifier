@@ -6,6 +6,8 @@
 ![Kaggle](https://img.shields.io/badge/Kaggle-Dataset-20BEFF?logo=kaggle)
 ![Status](https://img.shields.io/badge/Status-Complete-brightgreen)
 
+🔗 **[▶ View Live Kaggle Notebook](https://www.kaggle.com/code/alankriti21/spotify-kaggle-notebook)** | **[📊 Dataset](https://www.kaggle.com/datasets/mrmorj/dataset-of-songs-in-spotify)**
+
 > **University of Delhi | Shyama Prasad Mukherji College (For Women)**
 > Course: Data Mining II | Group Project
 
@@ -103,11 +105,12 @@ Business Insights ───── Feature importance, genre patterns, recommenda
 ```
 spotify-genre-classifier/
 │
-├── spotify_kaggle_notebook.py   # Full Python code (15 sections)
-├── README.md                    # This file
-├── requirements.txt             # Python dependencies
+├── spotify_kaggle_notebook.ipynb  # Full Kaggle notebook with outputs
+├── spotify_kaggle_notebook.py     # Python script version
+├── README.md                      # This file
+├── requirements.txt               # Python dependencies
 │
-└── outputs/                     # Generated charts
+└── outputs/                       # Generated charts
     ├── correlation_heatmap.png
     ├── distributions.png
     ├── genre_counts.png
@@ -124,24 +127,26 @@ spotify-genre-classifier/
 
 ## ⚙️ How to Run
 
-### Option 1 — Kaggle (Recommended)
-1. Go to [Kaggle Dataset](https://www.kaggle.com/datasets/mrmorj/dataset-of-songs-in-spotify)
-2. Click **Code → New Notebook**
-3. Add dataset as input
-4. Paste code from `spotify_kaggle_notebook.py`
-5. Click **Run All**
+### Option 1 — Kaggle (Recommended, No Setup Needed)
+🔗 **Direct Link:** https://www.kaggle.com/code/alankriti21/spotify-kaggle-notebook
 
-### Option 2 — Local
+1. Open the link above
+2. Click **Copy & Edit** to run it yourself
+3. Dataset is pre-attached — just click **Run All**
+
+### Option 2 — Local Machine
 ```bash
 # Clone the repo
-git clone https://github.com/YOUR_USERNAME/spotify-genre-classifier.git
+git clone https://github.com/alankritijain21/spotify-genre-classifier.git
 cd spotify-genre-classifier
 
 # Install dependencies
 pip install -r requirements.txt
 
-# Download dataset from Kaggle and place genres_v2.csv in project folder
-# Update file path in code to: df = pd.read_csv('genres_v2.csv')
+# Download dataset from Kaggle
+# Place genres_v2.csv in the project folder
+# Update file path in code:
+# df = pd.read_csv('genres_v2.csv')
 
 # Run
 python spotify_kaggle_notebook.py
@@ -165,12 +170,12 @@ scipy>=1.9.0
 
 ## 👥 Team
 
-| Name | Roll No |
-|---|---|
-| Alankriti Jain | 22/1070 |
-| Riya | 22/1475 |
-| Manasvi Arora | 22/1507 |
-| Archi Aggarwal | 22/1715 |
+| Name |
+|---|
+| Alankriti Jain | 
+| Riya | 
+| Manasvi Arora | 
+| Archi Aggarwal | 
 
 **Institution:** Shyama Prasad Mukherji College for Women, University of Delhi
 **Course:** Data Mining II (DM2)
