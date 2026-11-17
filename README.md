@@ -7,32 +7,32 @@ University of Delhi | Shyama Prasad Mukherji College for Women | Course: Data Mi
 🔗 [Kaggle notebook](https://www.kaggle.com/code/alankriti21/spotify-kaggle-notebook) | 📊 [Dataset](https://www.kaggle.com/datasets/mrmorj/dataset-of-songs-in-spotify)
 
 ## Overview
-This project analyses 42,305 Spotify tracks across 15 genres. It covers data cleaning, feature engineering, EDA, outlier handling, model comparison and SHAP explainability.
+This project analyses 42,305 Spotify tracks across 15 genres. It covers data cleaning, feature engineering, EDA, outlier handling, classifier comparison and SHAP explainability.
 
 **Question:** Can a song's genre be predicted from its audio features alone?
-**Answer:** Largely yes. Gradient Boosting reached **66.27% accuracy** (macro F1 0.61), and tempo was the most important feature.
+**Answer:** Largely yes for electronic genres, much less for overlapping rap-related genres. Gradient Boosting reached **66.27% accuracy** (macro F1 0.61) on a 70/30 split, and tempo was the most important feature.
 
 ![SHAP summary](shap_summary_bar.png)
 ![Confusion matrix](confusion_matrix.png)
 
 ## My contribution
-Feature engineering, model tuning, and SHAP analysis.
+Feature engineering and SHAP analysis.
 
 ## Dataset
 | Property | Detail |
 |---|---|
 | Source | Dataset of Songs in Spotify (Kaggle, mrmorj) |
-| Files | genres_v2.csv, playlists.csv |
+| Files | genres_v2.csv (used); playlists.csv (loaded, not used in the analysis) |
 | Size | 42,305 rows × 22 columns |
-| Genres | 15 |
+| Genres | 15 (Pop is smallest with 461 tracks; Underground Rap is largest with 5,875) |
 
 ## Pipeline
-1. **Cleaning:** removed duplicates, encoded columns, dropped unused fields
+1. **Cleaning:** checked for duplicates (none found), dropped ID and index columns, label-encoded the genre target
 2. **Feature engineering:** 6 derived features (energy_density, dance_mood_score, vocal_presence, duration_min, loudness_normalized, tempo_category)
-3. **EDA:** correlation heatmap, distributions, genre-level analysis, interactive Plotly charts
-4. **Outliers:** Z-score (threshold 3) with capping, so no rows are lost
-5. **Models:** AdaBoost (GridSearchCV, 5-fold CV), Gradient Boosting, Random Forest
-6. **Explainability:** SHAP global, per-genre and single-prediction views
+3. **EDA:** correlation heatmap, distributions, genre-level statistics, interactive Plotly charts
+4. **Outliers:** Z-score (threshold 3), capped at mean ± 3 standard deviations so no rows are lost
+5. **Models:** AdaBoost (GridSearchCV, 5-fold CV), Gradient Boosting, Random Forest, using 12 features
+6. **Explainability:** SHAP on the Random Forest
 
 ![Correlation heatmap](correlation_heatmap.png)
 
@@ -40,11 +40,11 @@ Feature engineering, model tuning, and SHAP analysis.
 | Model | Accuracy | Macro F1 | Notes |
 |---|---|---|---|
 | Gradient Boosting | 66.27% | 0.61 | Best overall |
-| Random Forest | 64.29% | 0.61 | Stable |
+| Random Forest | 64.29% | 0.61 | Close second |
 | AdaBoost | 34.80% | 0.29 | Weak on overlapping genres |
 
-**Easiest genres (Gradient Boosting):** dnb (F1 0.97), hardstyle (0.88), techhouse (0.88), psytrance (0.86).
-**Hardest genres:** Dark Trap (F1 0.49) and Pop (0.13). Rap subgenres overlap heavily, and Pop has few samples.
+**Easiest genres (Gradient Boosting, F1):** dnb 0.97, hardstyle 0.88, techhouse 0.88, psytrance 0.86.
+**Hardest genres:** Pop 0.13, Trap Metal 0.26, RnB 0.36, Hiphop 0.37. Rap-related subgenres overlap heavily, and Pop has only 461 tracks.
 
 ![Model comparison](model_comparison.png)
 
@@ -60,25 +60,25 @@ Feature engineering, model tuning, and SHAP analysis.
 ![Feature importance](feature_importance.png)
 
 ## SHAP explainability
-SHAP shows which audio features push a song toward each genre.
-- Tempo is the most decisive feature overall.
-- Electronic genres (dnb, techno, hardstyle) are separated mainly by tempo.
-- Rap genres rely on speechiness and danceability.
-- RnB and Pop are separated by valence and dance_mood_score.
+SHAP (TreeExplainer on the Random Forest, 300 test samples) shows which audio features push predictions the most.
+- Tempo is the most influential feature overall (mean |SHAP| 0.036), followed by instrumentalness and danceability (about 0.019 each).
+- The notebook's per-genre SHAP plot covers only the first six genres alphabetically. Extending it to all 15 is a planned improvement.
 
 ## Insights
-- Electronic genres reach 86–97% precision, so they have very distinct audio fingerprints.
-- Rap subgenres overlap, so audio features alone are not enough to separate them.
+- Electronic genres are the easiest to classify (F1 0.82 to 0.97), so they have distinct audio profiles.
+- Rap-related subgenres overlap, so audio features alone are not enough to separate them.
 - Songs under 90 BPM have the highest average valence (0.437).
 - Songs at 90–130 BPM have the highest average danceability (0.724).
 
 ## Limitations
-- The Bagging regression on `energy` gave R² ≈ 0.9999. This is suspiciously high. Some engineered features (such as `energy_density`) may be derived from `energy`, which would leak the target. Re-running without them is a planned improvement, so this result should not be read as a finding.
+- **Energy regression is not valid.** The notebook also fits regression models to predict `energy`, but `energy` and `energy_density` (which is computed from `energy`) were among the inputs. This leaks the target, so the reported R² of about 0.9999 is not meaningful and is excluded from the conclusions above. It does not affect the genre classification results.
+- Outlier capping used statistics from the full dataset before the train/test split, which is a minor leak.
+- Results come from a single 70/30 split with no repeated runs.
 - Audio features alone cannot separate overlapping genres.
 
 ## How to run
 **Kaggle (easiest):** open the notebook link above, click *Copy & Edit*, then *Run All*.
-**Locally:** download `spotify-genre-classification-ensemble-ml-shap.ipynb` and `genres_v2.csv`, update the file path in the first cell, and run it in Jupyter.
+**Locally:** download `spotify-genre-classification-ensemble-ml-shap.ipynb` and `genres_v2.csv`, update the file path in the second cell, and run it in Jupyter.
 
 ## Requirements
 pandas, numpy, matplotlib, seaborn, scikit-learn, plotly, scipy, shap
