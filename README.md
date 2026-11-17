@@ -76,7 +76,7 @@ SHAP shows which audio features push a song toward each genre.
 
 ## How to run
 **Kaggle (easiest):** open the notebook link above, click *Copy & Edit*, then *Run All*.
-**Locally:** download `spotify-kaggle-notebook.ipynb` and `genres_v2.csv`, update the file path in the first cell, and run it in Jupyter.
+**Locally:** download `spotify-genre-classification-ensemble-ml-shap.ipynb` and `genres_v2.csv`, update the file path in the first cell, and run it in Jupyter.
 
 ## Requirements
 pandas, numpy, matplotlib, seaborn, scikit-learn, plotly, scipy, shap
