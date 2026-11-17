@@ -34,6 +34,8 @@ Feature engineering, model tuning, and SHAP analysis.
 5. **Models:** AdaBoost (GridSearchCV, 5-fold CV), Gradient Boosting, Random Forest
 6. **Explainability:** SHAP global, per-genre and single-prediction views
 
+![Correlation heatmap](correlation_heatmap.png)
+
 ## Results
 | Model | Accuracy | Macro F1 | Notes |
 |---|---|---|---|
